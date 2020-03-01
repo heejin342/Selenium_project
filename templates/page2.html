@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>두번째 페이지</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap&subset=korean" rel="stylesheet">
+
+    <script>
+        var imgs_1 = new Array()
+        var imgs_2 = new Array()
+        var poster_1 = new Array()
+        var poster_2 = new Array()
+        var title_1 = new Array()
+        var title_2 = new Array()
+        var summary_1 = new Array()
+        var summary_2 = new Array()
+        var director_1 = new Array()
+        var director_2 = new Array()
+        var actor_1 = new Array()
+        var actor_2 = new Array()
+
+        var next = 1;
+
+        var cnt = 0;
+	    listing();
+
+
+        function cng(img){
+            if (cnt == imgs_1.length -1){
+               update_user('드라마', 'SF')
+               $('.movie').remove()
+               add_button_html = '<button id=button_result onclick="btn_result()">결과를 확인하시겠습니까?</button>'
+               $('.contents').append(add_button_html)
+               <!-- 이거 왜 버튼 추가되면 배경이 반토막 나는지 정말모르겠어 .. 왜일까 ...? -->
+            }
+            $('#movie_poster1').attr('src',imgs_1[next].src)
+            $('#movie_poster2').attr('src',imgs_2[next].src)
+            $('#movie_title1').text(title_1[next])
+            $('#movie_title2').text(title_2[next])
+            $('#movie_summary1').text(summary_1[next])
+            $('#movie_summary2').text(summary_2[next])
+            $('#movie_director1').text(director_1[next])
+            $('#movie_director2').text(director_2[next])
+            $('#movie_actor1').text(actor_1[next])
+            $('#movie_actor2').text(actor_2[next])
+
+            next++;
+
+            next%=imgs_1.length;
+
+            cnt++;
+        }
+
+        function show(all_poster,all_title,all_summary,all_actor,all_director){
+
+            for(var i= 0 ; i <= all_poster.length/2-1 ; i++){
+            poster_1[i]=all_poster[i].split('\n')[1]
+            poster_2[i]=all_poster[i + all_poster.length/2].split('\n')[1]
+            summary_1[i]=all_summary[i].split('\n')[1]
+            summary_2[i]=all_summary[i + all_poster.length/2].split('\n')[1]
+            director_1[i]=all_director[i].split('\n')[1]
+            director_2[i]=all_director[i + all_poster.length/2].split('\n')[1]
+            title_1[i]=all_title[i].split('\n')[1]
+            title_2[i]=all_title[i + all_poster.length/2].split('\n')[1]
+            actor_1[i]=all_actor[i].split('\n')[1]
+            actor_2[i]=all_actor[i + all_poster.length/2].split('\n')[1]
+            }
+
+            for(var i = 0 ; i<poster_1.length; i++){
+                imgs_1[i] = new Image()
+                imgs_2[i] = new Image()
+
+                imgs_1[i].src = poster_1[i]
+                imgs_2[i].src = poster_2[i]
+            }
+        }
+
+        function listing(){
+            $.ajax({
+                type: "GET",
+                url: "/user",
+                data: {},
+                success: function(response){
+                    let Long_movie_list = response['Long_movie_list'];
+                    all_title = new Array();
+                    all_poster = new Array();
+                    all_director = new Array();
+                    all_actor = new Array();
+                    all_summary = new Array();
+                    all_main_genre = new Array();
+                    all_second_genre = new Array();
+                     <!-- 사진 20번 바뀐다 == 20번 대결 -->
+                    for (let i = 0; i < 40; i++) {
+                        random = Math.floor(Math.random() * Long_movie_list.length)
+
+                        title = Long_movie_list[random]['title']
+                        poster = Long_movie_list[random]['poster']
+                        director = Long_movie_list[random]['director']
+                        actor = Long_movie_list[random]['actor']
+                        summary = Long_movie_list[random]['summary']
+                        if (summary.length > 50){
+                           summary = summary.substr(0,50)+"..."
+                        }
+                        main_genre = Long_movie_list[random]['main_genre']
+                        second_genre = Long_movie_list[random]['second_genre']
+                        all_title.push(title)
+                        all_poster.push(poster)
+                        all_director.push(director)
+                        all_actor.push(actor)
+                        all_summary.push(summary)
+                        all_main_genre.push(main_genre)
+                        all_second_genre.push(second_genre)
+                    }
+                    $('#movie_title1').text(all_title[0])
+                    $('#movie_title2').text(all_title[all_poster.length/2])
+                    $('#movie_summary1').text(all_summary[0])
+                    $('#movie_summary2').text(all_summary[all_poster.length/2])
+                    $('#movie_director1').text(all_director[0])
+                    $('#movie_director2').text(all_director[all_poster.length/2])
+                    $('#movie_actor1').text(all_actor[0])
+                    $('#movie_actor2').text(all_actor[all_poster.length/2])
+                    $('#movie_poster1').attr('src',all_poster[0].split('\n')[1])
+                    $('#movie_poster2').attr('src',all_poster[all_poster.length/2].split('\n')[1])
+
+                    show(all_poster,all_title,all_summary,all_actor,all_director)
+                }
+            })
+        }
+
+        <!--결과 선택 완료-->
+        function update_user(genre_1,genre_2){
+			$.ajax({
+              	type: "POST",
+              	url: "/userupdate",
+              	data: {
+               	 genre_1:genre_1,
+               	 genre_2:genre_2
+              	},
+              	success: function(response){
+              	console.log(response)
+              	}
+            })
+		}
+
+		function btn_result(){
+            location.href="/page3"
+        }
+
+    </script>
+
+
+    <style type="text/css">
+      .wrap {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+      }
+      .bg_img{
+         background-image: url( "static/bg_poster_dark.png" );
+      }
+      .contents{
+         border: 1px solid;
+         border-radius: 30px;
+         background-color: #231f20;
+         margin-top:100px;
+         margin-bottom: 100px;
+      }
+      .title {
+         text-align: center;
+         font-size: 60px;
+         margin-top: 50px;
+         color:white;
+      }
+      .center {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+      }
+      .movie_contents {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         margin-top: 50px;
+         margin-bottom: 50px;
+         width: 1000px;
+         font-family: 'Poor Story', sans-serif;
+      }
+      .movie{
+         width:300px;
+         margin-right: 50px;
+         margin-left: 50px;
+         margin-top: 10px;
+         text-align: center;
+      }
+      .movie:hover{
+         /*visibility: hidden;*/
+         transform: scale(1.3);
+      }
+      #movie_title1{
+         font-weight: bold;
+      }
+      #movie_title2{
+         font-weight: bold;
+      }
+    </style>
+
+</head>
+<body>
+<div class="wrap bg_img">
+    <div class="contents">
+        <div class="title">나의 선호 장르 찾기</div>
+        <div class="movie_contents">
+            <div class="card-deck">
+                <!--첫번쨰 영화-->
+                <div class="movie">
+                    <div class="card" style="width: 18rem;">
+                        <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster1" src="" alt="Card image cap"
+                         onclick="cng(this)">
+                        <div class="card-body">
+                            <h5 class="card-title" id="movie_title1"></h5>
+                            <p class="card-text" id="movie_summary1"></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="movie_director1"></li>
+                            <li class="list-group-item" id="movie_actor1"></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--두번쨰 영화-->
+                <div class="movie">
+                    <div class="card" style="width: 18rem;">
+                        <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster2" src="" alt="Card image cap"
+                         onclick="cng(this)">
+                        <div class="card-body">
+                            <h5 class="card-title" id="movie_title2"></h5>
+                            <p class="card-text" id="movie_summary2"></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="movie_director2"></li>
+                            <li class="list-group-item" id="movie_actor2"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

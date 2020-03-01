@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>세번째 페이지</title>
+
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+
+		.result_contents{
+			width:800px;
+			height: 200px;
+			background-color: #b0ecf4;
+			text-align: center;
+			margin-top: 50px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+		.result_title{
+			font-size: 26pt;
+			padding-top: 30px;
+		}
+
+		#result_main_genre{
+			font-size: 36pt;
+		}
+		#result_second_genre{
+			font-size: 36pt;
+		}
+
+		.result_word{
+			font-size: 26pt;
+		}
+
+		.genre_contents{
+			margin-top: 50px;
+			margin-left: 100px;
+			margin-right: 100px;
+		}
+
+		.movie_title{
+			font-weight: bold;
+			text-align: center;
+		}
+
+		#main_genre_title{
+			text-align: center;
+
+		}
+
+		#second_genre_title{
+			text-align: center;
+
+		}
+
+
+	</style>
+
+</head>
+<body>
+
+	<div class="result_contents">
+		<div class="result_title">내가 선호하는 장르는</div>
+		<br>
+		<span id = "result_main_genre"> 드라마 </span> <span id = "result_second_genre"> 로맨스 </span><span class="result_word">입니다</span>
+	</div>
+
+
+	<!--메인장르 컨텐츠-->
+	<div class = genre_contents>
+		<h1 id = "main_genre_title">드라마</h1>
+
+		<div class="card-deck">
+			<!--첫번째장르 첫번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="maingenre_movie_poster1" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="maingenre_movie_title1">기생충</h5>
+					<p class="card-text" id="maingenre_movie_summary1">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="maingenre_movie_director1">봉준호 감독</small></p>
+				</div>
+			</div>
+			<!--첫번째장르 두번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="maingenre_movie_poster2" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="maingenre_movie_title2">기생충</h5>
+					<p class="card-text" id="maingenre_movie_summary2">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="maingenre_movie_director2">봉준호 감독</small></p>
+				</div>
+			</div>
+			<!--첫번째장르 세번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="maingenre_movie_poster3" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="maingenre_movie_title3">기생충</h5>
+					<p class="card-text" id="maingenre_movie_summary3">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="maingenre_movie_director3" >봉준호 감독</small></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--세컨장르 컨텐츠-->
+	<div class = genre_contents>
+		<h1 id = "second_genre_title">로맨스</h1>
+		<div class="card-deck">
+			<!--두번째장르 첫번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="secondgenre_movie_poster1" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="secondgenre_movie_title1">기생충</h5>
+					<p class="card-text" id="secondgenre_movie_summary1">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="secondgenre_movie_director1" >봉준호 감독</small></p>
+				</div>
+			</div>
+			<!--두번째장르 두번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="secondgenre_movie_poster2" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="secondgenre_movie_title2">기생충</h5>
+					<p class="card-text" id="secondgenre_movie_summary2">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="secondgenre_movie_director2" >봉준호 감독</small></p>
+				</div>
+			</div>
+			<!--두번째장르 세번쨰추천영화-->
+			<div class="card">
+				<img class="card-img-top" id="secondgenre_movie_poster3" src="static/movie_poster.jpg" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title movie_title" id="secondgenre_movie_title3">기생충</h5>
+					<p class="card-text" id="secondgenre_movie_summary3">“폐 끼치고 싶진 않았어요”
+						전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족.
+						장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는
+						모처럼 싹튼 고정수입의 희망이다.
+						온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우.
+						글로벌 IT기업 CEO인 박사장의 저택에 도착하자
+					젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다.</p>
+					<p class="card-text"><small class="text-muted" id="secondgenre_movie_director3" >봉준호 감독</small></p>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+</html>

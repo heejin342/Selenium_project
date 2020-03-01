@@ -1,0 +1,122 @@
+<html>
+<head>
+    <title>helloworld</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script>
+
+        listing()
+
+        genre_score = {
+        '드라마': 0,
+        '판타지': 0,
+        '공포': 0,
+        '멜로/애정/로맨스': 0,
+        '모험': 0,
+        '스릴러': 0,
+        '느와르': 0,
+        '다큐멘터리': 0,
+        '코미디': 0,
+        '가족': 0,
+        '미스터리': 0,
+        '전쟁': 0,
+        '에니메이션': 0,
+        '범죄': 0,
+        '뮤지컬': 0,
+        'SF': 0,
+        '액션': 0
+         }
+
+        <!-- Q1.화면에 영화 두개씩출력해줘야함. 그리고 뭔가 점수 넣는 알고리즘도 틀린거같음-->
+        function fight(all_poster,all_main_genre,all_second_genre){
+            for(var i= 0 ; i<all_poster.length/2 ; i+=2){
+                var poster_1 = all_poster[i].split('\n')[1]
+                var poster_2 = all_poster[i+1].split('\n')[1]
+                var main_genre_1 = all_main_genre[i].split('\n')[1]
+                var main_genre_2 = all_main_genre[i+1].split('\n')[1]
+                var second_genre_1 = all_second_genre[i].split('\n')[1]
+                var second_genre_2 = all_second_genre[i+1].split('\n')[1]
+
+                temp_html = "<img src= " + poster_1 + " id=checked_1 onclick=count1()>\n <img src = " + poster_2 + " id=checked_2 onclick=count2()>"
+                $('#z').append(temp_html)
+
+                <!--Q2.두번째 장르가 없을 경우 고려해야함 -->
+                $('#checked_1').click(function(){
+                 count1(main_genre_1,second_genre_1);
+                });
+                $('#checked_2').click(function(){
+                 count2(main_genre_2,second_genre_2);
+                });
+            }
+        }
+        <!-- Q3. score 계산이 완료되면 , 그 결과를 유저db에 선호하는 main장르, second 장르에 넣어줘야함       -->
+        <!--  userdb는 언니가 만들었었는데 거기에 선호장르값부분만 지워놓고 이 값들을 채워가야함      -->
+
+        function count1(main_genre_1,second_genre_1){
+            genre_score[main_genre_1] += 5
+            genre_score[second_genre_1] += 3
+        }
+        function count2(main_genre_2,second_genre_2){
+            genre_score[main_genre_2] += 5
+            genre_score[second_genre_2] += 3
+        }
+
+        function listing(){
+            $.ajax({
+                type: "GET",
+                url: "/user",
+                data: {},
+                success: function(response){
+                    let Long_movie_list = response['Long_movie_list'];
+                    all_title = new Array;
+                    all_poster = new Array;
+                    all_director = new Array;
+                    all_actor = new Array;
+                    all_summary = new Array;
+                    all_main_genre = new Array;
+                    all_second_genre = new Array;
+
+                    for (let i = 0; i < 34; i++) {
+                        random = Math.floor(Math.random() * Long_movie_list.length)
+
+                        title = Long_movie_list[random]['title']
+                        poster = Long_movie_list[random]['poster']
+                        director = Long_movie_list[random]['director']
+                        actor = Long_movie_list[random]['actor']
+                        summary = Long_movie_list[random]['summary']
+                        main_genre = Long_movie_list[random]['main_genre']
+                        second_genre = Long_movie_list[random]['second_genre']
+                        all_title.push(title)
+                        all_poster.push(poster)
+                        all_director.push(director)
+                        all_actor.push(actor)
+                        all_summary.push(summary)
+                        all_main_genre.push(main_genre)
+                        all_second_genre.push(second_genre)
+                    }
+                    fight(all_poster,all_main_genre,all_second_genre)
+                }
+            })
+        }
+
+<!--        function make_table_list(title, poster, director, actor) {-->
+<!--         let temp_html = title +  director-->
+<!--         $('#z').append(temp_html)-->
+<!--      }-->
+
+    </script>
+</head>
+<body>
+
+    <div id = "z">
+<!--        <img src="fight_1" id=checked_1 onclick=count1()> <strong>VS</strong>-->
+<!--        <img src="" id=checked_2 onclick=count2()>-->
+    </div>
+
+</body>
+</html>
