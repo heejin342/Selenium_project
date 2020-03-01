@@ -17,35 +17,58 @@
             crossorigin="anonymous"></script>
 
     <script>
-		listing2();
 
-		function show_poster(all_poster){
-		    for(var i= 0 ; i<1 ; i++){
-			    poster_one = all_poster[i].split('\n')[1]
-			    temp_html3 = "<img src= " + poster_one + " style='width:500px ;height:450px'>"
-			    $('#z').append(temp_html3)
+    listing2()
+
+	function listing2(){
+        $.ajax({
+            type: "GET",
+            url: "/main",
+            data: {},
+            success: function(response){
+                ran=Math.floor(Math.random() * 3) + 1
+                if(ran==1){
+                    $('#video_random').attr('src','https://tv.naver.com/embed/12431518?autoPlay=true')
+                }
+                else if(ran==2){
+                    $('#video_random').attr('src','https://tv.naver.com/embed/11646841?autoPlay=true')
+                }
+                else if(ran==3){
+                    $('#video_random').attr('src','https://tv.naver.com/embed/12317390?autoPlay=true')
+                }
             }
-		}
+        })
+    }
 
-		function listing2(){
-			$.ajax({
-				type: "GET",
-				url: "/main",
-				data: {},
-				success: function(response){
-					let ART_movie_list = response['ART_movie_list'];
-				    all_poster = new Array();
-					random = Math.floor(Math.random() * ART_movie_list.length)
-					poster = ART_movie_list[random]['poster']
-                    if(poster.indexOf("noimage") != -1){
-                        listing2()
-                        return;
-                    }
-					all_poster.push(poster)
-					show_poster(all_poster)
-				}
-			})
-		}
+
+<!--		function show_poster(all_poster){-->
+<!--		    for(var i= 0 ; i<1 ; i++){-->
+<!--			    poster_one = all_poster[i].split('\n')[1]-->
+<!--			    temp_html3 = "<img src= " + poster_one + " style='width:500px ;height:450px'>"-->
+<!--			    $('#z').append(temp_html3)-->
+<!--            }-->
+<!--		}-->
+
+<!--		function listing2(){-->
+<!--			$.ajax({-->
+<!--				type: "GET",-->
+<!--				url: "/main",-->
+<!--				data: {},-->
+<!--				success: function(response){-->
+<!--					let ART_movie_list = response['ART_movie_list'];-->
+<!--				    all_poster = new Array();-->
+<!--					random = Math.floor(Math.random() * ART_movie_list.length)-->
+<!--					poster = ART_movie_list[random]['poster']-->
+<!--                    if(poster.indexOf("noimage") != -1){-->
+<!--                        listing2()-->
+<!--                        return;-->
+<!--                    }-->
+<!--					all_poster.push(poster)-->
+<!--					show_poster(all_poster)-->
+<!--				}-->
+<!--			})-->
+<!--		}-->
+
 
 		function make_userdb(){
 			let email = $('#inputEmail').val();
@@ -94,24 +117,35 @@
 
 			if((regEmail.test($('#inputEmail').val())==true)){
 				make_userdb();
-				location.href="/page2"
+                button_movepage = "<button id=go_page4 onclick='go_page4()'>오늘의 추천영화 보기</button> <button id=go_page2 onclick='go_page2()'>선호장르 알아보기</button>"
+                $('.cover').append(button_movepage)
 			}
 		}
 
         function btn_login(){
-            $('#z').remove();
-            temp_html1 = '<h1 class="cover-heading" style="text-align: center">Please log-in</h1><div class="form-label-group"><input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="inputPassword" class="form-control" placeholder="Password" required><label for="inputPassword">Password</label></div><div class="checkbox mb-3"><label><input type="checkbox" value="remember-me"> Remember me</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="ccclick()" > 확인</button></div>'
+            $('#video_random').remove();
+            $('#join').remove();
+
+            temp_html1 = '<div id = "login"><h1 class="cover-heading" style="text-align: center">Please log-in</h1><div class="form-label-group"><input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="inputPassword" class="form-control" placeholder="Password" required><label for="inputPassword">Password</label></div><div class="checkbox mb-3"><label><input type="checkbox" value="remember-me"> Remember me</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="ccclick()" > 확인</button></div></div>'
             $('.cover').append(temp_html1)
         }
 
         function btn_join(){
-            $('#z').remove();
-            temp_html2 = '<h1 class="cover-heading" style="text-align: center">Please register</h1><div class="form-label-group"><input type="email" id="new_inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="new_inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="new_inputPassword1" class="form-control" placeholder="Password" required><label for="new_inputPassword1">Password</label></div><div class="form-label-group"><input type="password" id="new_inputPassword2" class="form-control" placeholder="Password" required><label for="new_inputPassword2">Password again</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="show_poster1()"> join </button></div>'
+            $('#video_random').remove();
+            $('#login').remove();
+
+            temp_html2 = '<div id = "join"><h1 class="cover-heading" style="text-align: center">Please register</h1><div class="form-label-group"><input type="email" id="new_inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="new_inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="new_inputPassword1" class="form-control" placeholder="Password" required><label for="new_inputPassword1">Password</label></div><div class="form-label-group"><input type="password" id="new_inputPassword2" class="form-control" placeholder="Password" required><label for="new_inputPassword2">Password again</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="show_poster1()"> join </button></div></div>'
              $('.cover').append(temp_html2)
         }
 
         function btn_home(){
 		    location.href="/"
+        }
+        function go_page2(){
+		    location.href="/page2"
+        }
+        function go_page4(){
+		    location.href="/page4"
         }
 
     </script>
@@ -194,6 +228,10 @@
 				color: rgba(255, 255, 255, .5);
 			}
 
+			#video_random{
+			    margin:auto;
+			}
+
 
     </style>
 </head>
@@ -211,9 +249,13 @@
             </nav>
         </div>
     </header>
-    <div id="z"></div>
+
+    <iframe src='' id="video_random" frameborder='no' scrolling='no'
+            marginwidth='0' marginheight='0' WIDTH='544' HEIGHT='306' allow='autoplay' allowfullscreen></iframe>
+
     <main role="main" class="inner cover" style=" margin-left:auto ; margin-right:auto; width: 370px" id="a">
     </main>
+
     <footer class="mastfoot mt-auto">
         <div class="inner">
             <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
