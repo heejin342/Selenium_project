@@ -1,301 +1,211 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>세번째 페이지</title>
+  <title>세번째 페이지</title>
 
-   <!-- Required meta tags -->
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-   <!-- Bootstrap CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-   <!-- JS -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-   crossorigin="anonymous"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-   crossorigin="anonymous"></script>
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
 
-   <style type="text/css">
+  <script type="text/javascript">
 
-      .result_contents{
-         width:800px;
-         height: 200px;
-         background-color: #b0ecf4;
-         text-align: center;
-         margin-top: 50px;
-         margin-right: auto;
-         margin-left: auto;
+  // $(document).ready(function(){
+   //  $('#movies1').html('');
+   //  $('#movies2').html('');
+
+   //});
+
+
+   listing_genre1();
+   listing_genre2();
+
+
+   function listing_genre1() {
+    $.ajax({
+      type: "GET",
+      url: "/genre1_movie",
+      data: {},
+      success: function(response){
+        if (response['result'] == 'success') {
+          let movies = response['movies'];
+          for (let i = 0; i < movies.length; i++) {
+            movie_card(movies[i]['title'],movies[i]['poster'],movies[i]['director'],movies[i]['summary'])
+          }
+        } else {
+          alert('주문을 받아오지 못했습니다');
+        }
       }
+    })
+  }
 
-      .result_title{
-         font-size: 26pt;
-         padding-top: 30px;
+  function movie_card(title,poster,director,summary){
+    // $('#maingenre_movie_title1').append(title);
+    // $('#maingenre_movie_poster1').append(poster);
+    // $('#maingenre_movie_director1').append(director);
+    // $('#maingenre_movie_summary1').append(summary);
+
+    let temp_html_1 = '<div class="card">\
+    <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster+'" alt="Card image cap">\
+    <div class="card-body">\
+    <h5 class="card-title movie_title" id="maingenre_movie_title1">'+title+'</h5>\
+    <p class="card-text" id="maingenre_movie_summary1">'+summary+'</p>\
+    <p class="card-text"><small class="text-muted" id="maingenre_movie_director1">'+director+'</small></p>\
+    </div>\
+    </div>';
+    $('#movies1').append(temp_html_1);
+
+  }
+
+
+
+  function listing_genre2() {
+    $.ajax({
+      type: "GET",
+      url: "/genre2_movie",
+      data: {},
+      success: function(response){
+        if (response['result'] == 'success') {
+          let movies = response['movies'];
+          for (let i = 0; i < movies.length; i++) {
+            movie_card2(movies[i]['title'],movies[i]['poster'],movies[i]['director'],movies[i]['summary'])
+          }
+        } else {
+          alert('주문을 받아오지 못했습니다');
+        }
       }
+    })
+  }
 
-      #result_main_genre{
-         font-size: 36pt;
-      }
-      #result_second_genre{
-         font-size: 36pt;
-      }
+  function movie_card2(title,poster,director,summary){
+    // $('#maingenre_movie_title1').append(title);
+    // $('#maingenre_movie_poster1').append(poster);
+    // $('#maingenre_movie_director1').append(director);
+    // $('#maingenre_movie_summary1').append(summary);
 
-      .result_word{
-         font-size: 26pt;
-      }
+    let temp_html_1 = '<div class="card">\
+    <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster+'" alt="Card image cap">\
+    <div class="card-body">\
+    <h5 class="card-title movie_title" id="maingenre_movie_title1">'+title+'</h5>\
+    <p class="card-text" id="maingenre_movie_summary1">'+summary+'</p>\
+    <p class="card-text"><small class="text-muted" id="maingenre_movie_director1">'+director+'</small></p>\
+    </div>\
+    </div>';
+    $('#movies2').append(temp_html_1);
 
-      .genre_contents{
-         margin-top: 50px;
-         margin-left: 100px;
-         margin-right: 100px;
-      }
-
-      .movie_title{
-         font-weight: bold;
-         text-align: center;
-      }
-
-      #main_genre_title{
-         text-align: center;
-
-      }
-
-      #second_genre_title{
-         text-align: center;
-
-      }
+  }
 
 
 
 
-   </style>
-   <script type="text/javascript">
+</script>
 
-      ART_Movie_listing_genre_1();
-      ART_Movie_listing_genre_2();
+<style type="text/css">
 
+  .result_contents{
+    border: 1px solid;
+    border-radius: 30px;
+    width:800px;
+    height: 210px;
+    background-color: #231f20;
+    text-align: center;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 
-      function ART_Movie_listing_genre_1(){
-         $.ajax({
-            type: "GET",
-            url: "/art_user_genre_1",
-            data: {},
-            success: function(response){
-               let genre_1_movie_infos = response['ART_movie_list'];
-               let user_genre_1 = response['user_genre_1']
+  .title_logo_img{
+    padding-top: 10px;
+  }
 
-               $('#result_main_genre').append(user_genre_1+'/')
-               $('#main_genre_title').append(user_genre_1)
+  .result_title{
+    font-size: 26pt;
+    padding-top: 10px;
+    color: white;
+  }
 
+  #result_main_genre{
+    font-size: 36pt;
+    color: white;
+  }
+  #result_second_genre{
+    font-size: 36pt;
+    color: white;
+  }
 
+  .result_word{
+    font-size: 26pt;
+    color: white;
+  }
 
-               let random_1 = Math.floor(Math.random() * genre_1_movie_infos.length)
-               let random_2 = Math.floor(Math.random() * genre_1_movie_infos.length)
-               let random_3 = Math.floor(Math.random() * genre_1_movie_infos.length)
+  .genre_contents{
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
 
-               if ((random_1 == random_2) || (random_1 == random_3) || (random_2 == random_3))
-                  ART_Movie_listing_genre_1()
+  .movie_title{
+    font-weight: bold;
+    text-align: center;
+  }
 
-               let genre_1_list = new Array;
-               let genre_1_first = new Array;
-               let genre_1_second = new Array;
-               let genre_1_third = new Array;
-               // 장르 1의 첫번째 영화 정보
-               let genre_1_first_title = genre_1_movie_infos[random_1]['title']
-               let genre_1_first_poster_url = genre_1_movie_infos[random_1]['poster_url']
-               let genre_1_first_director = genre_1_movie_infos[random_1]['director']
-               let genre_1_first_summary = genre_1_movie_infos[random_1]['summary']
+  #main_genre_title{
+    text-align: center;
 
-               genre_1_first.push(genre_1_first_title)
-               genre_1_first.push(genre_1_first_poster_url)
-               genre_1_first.push(genre_1_first_director)
-               genre_1_first.push(genre_1_first_summary)
+  }
 
-               console.log(genre_1_first)
+  #second_genre_title{
+    text-align: center;
 
-
-               // 장르 1의 두번째 영화 정보
-               let genre_1_second_title = genre_1_movie_infos[random_2]['title']
-               let genre_1_second_poster_url = genre_1_movie_infos[random_2]['poster_url']
-               let genre_1_second_director = genre_1_movie_infos[random_2]['director']
-               let genre_1_second_summary = genre_1_movie_infos[random_2]['summary']
-
-               genre_1_second.push(genre_1_second_title)
-               genre_1_second.push(genre_1_second_poster_url)
-               genre_1_second.push(genre_1_second_director)
-               genre_1_second.push(genre_1_second_summary)
-
-               console.log(genre_1_second)
-
-               // 장르1의 세번째 영화 정보
-               let genre_1_third_title = genre_1_movie_infos[random_3]['title']
-               let genre_1_third_poster_url = genre_1_movie_infos[random_3]['poster_url']
-               let genre_1_third_director = genre_1_movie_infos[random_3]['director']
-               let genre_1_third_summary = genre_1_movie_infos[random_3]['summary']
-
-               genre_1_third.push(genre_1_third_title)
-               genre_1_third.push(genre_1_third_poster_url)
-               genre_1_third.push(genre_1_third_director)
-               genre_1_third.push(genre_1_third_summary)
-
-               console.log(genre_1_third)
-
-               genre_1_list.push(genre_1_first)
-               genre_1_list.push(genre_1_second)
-               genre_1_list.push(genre_1_third)
-               console.log(genre_1_list)
-
-               for (i = 0 ; i < 3; i++) {
-                  title = genre_1_list[i][0]
-                  poster_url = genre_1_list[i][1]
-                  director = genre_1_list[i][2]
-                  summary = genre_1_list[i][3]
-
-                  let temp_html_1 = '<div class="card">\
-                  <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster_url+'" alt="Card image cap">\
-                  <div class="card-body">\
-                  <h5 class="card-title movie_title" id="maingenre_movie_title1">'+title+'</h5>\
-                  <p class="card-text" id="maingenre_movie_summary1">'+summary+'</p>\
-                  <p class="card-text"><small class="text-muted" id="maingenre_movie_director1">'+director+'</small></p>\
-                  </div>\
-                  </div>';
-                  $('#cards_box_1').append(temp_html_1);
-               }
-            }
-         })
-      }
-
-      function ART_Movie_listing_genre_2(){
-         $.ajax({
-            type: "GET",
-            url: "/art_user_genre_2",
-            data: {},
-            success: function(response){
-               let genre_2_movie_infos = response['ART_movie_list'];
-               let user_genre_2 = response['user_genre_2']
-
-               $('#result_second_genre').append(user_genre_2)
-               $('#second_genre_title').append(user_genre_2)
-
-               let random_1 = Math.floor(Math.random() * genre_2_movie_infos.length)
-               let random_2 = Math.floor(Math.random() * genre_2_movie_infos.length)
-               let random_3 = Math.floor(Math.random() * genre_2_movie_infos.length)
-
-<!--               if ((random_1 == random_2) || (random_1 == random_3) || (random_2 == random_3))-->
-<!--                  ART_Movie_listing_genre_2()-->
-
-               let genre_2_list = new Array;
-               let genre_2_first = new Array;
-               let genre_2_second = new Array;
-               let genre_2_third = new Array;
-               // 장르 1의 첫번째 영화 정보
-               let genre_2_first_title = genre_2_movie_infos[random_1]['title']
-               let genre_2_first_poster_url = genre_2_movie_infos[random_1]['poster_url']
-               let genre_2_first_director = genre_2_movie_infos[random_1]['director']
-               let genre_2_first_summary = genre_2_movie_infos[random_1]['summary']
-
-               genre_2_first.push(genre_2_first_title)
-               genre_2_first.push(genre_2_first_poster_url)
-               genre_2_first.push(genre_2_first_director)
-               genre_2_first.push(genre_2_first_summary)
+  }
 
 
-               // 장르 1의 두번째 영화 정보
-               let genre_2_second_title = genre_2_movie_infos[random_2]['title']
-               let genre_2_second_poster_url = genre_2_movie_infos[random_2]['poster_url']
-               let genre_2_second_director = genre_2_movie_infos[random_2]['director']
-               let genre_2_second_summary = genre_2_movie_infos[random_2]['summary']
-
-               genre_2_second.push(genre_2_second_title)
-               genre_2_second.push(genre_2_second_poster_url)
-               genre_2_second.push(genre_2_second_director)
-               genre_2_second.push(genre_2_second_summary)
 
 
-               // 장르1의 세번째 영화 정보
-               let genre_2_third_title = genre_2_movie_infos[random_3]['title']
-               let genre_2_third_poster_url = genre_2_movie_infos[random_3]['poster_url']
-               let genre_2_third_director = genre_2_movie_infos[random_3]['director']
-               let genre_2_third_summary = genre_2_movie_infos[random_3]['summary']
-
-               genre_2_third.push(genre_2_third_title)
-               genre_2_third.push(genre_2_third_poster_url)
-               genre_2_third.push(genre_2_third_director)
-               genre_2_third.push(genre_2_third_summary)
-
-               genre_2_list.push(genre_2_first)
-               genre_2_list.push(genre_2_second)
-               genre_2_list.push(genre_2_third)
-
-
-               for (i = 0 ; i < 3; i++) {
-                  title = genre_2_list[i][0]
-                  poster_url = genre_2_list[i][1]
-                  director = genre_2_list[i][2]
-                  summary = genre_2_list[i][3]
-
-                  let temp_html_2 = '<div class="card">\
-                  <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster_url+'" alt="Card image cap">\
-                  <div class="card-body">\
-                  <h5 class="card-title movie_title" id="maingenre_movie_title1">'+title+'</h5>\
-                  <p class="card-text" id="maingenre_movie_summary1">'+summary+'</p>\
-                  <p class="card-text"><small class="text-muted" id="maingenre_movie_director1">'+director+'</small></p>\
-                  </div>\
-                  </div>';
-                  $('#cards_box_2').append(temp_html_2);
-               }
-            }
-         })
-
-      }
-<!--      function user_bring(){-->
-<!--         //let genre_2 = user_genre_2-->
-<!--         $.ajax({-->
-<!--            type: "GET",-->
-<!--            url: "/userbring",-->
-<!--            data: {},-->
-<!--            success: function(response){-->
-<!--               let user_infos = response['userdb'];-->
-<!--               let user_genre_1 = user_infos['genre_1']-->
-<!--               let user_genre_2 = user_infos['genre_2']-->
-<!--            }-->
-<!--         })-->
-<!--      }-->
-
-
-   </script>
+</style>
 
 </head>
 <body>
 
-   <div class="result_contents">
-      <div class="result_title">당신이 선호하는 장르는</div>
-      <br>
-      <span id="result_main_genre">  </span> <span id="result_second_genre">  </span><span
-      class="result_word">입니다</span>
-   </div>
+  <div class="result_contents">
+    <div class = "title_logo_img"><img src="static/logo.png" style="width:70px; height:50px"></div>
+    <div class="result_title">Your Genre Is</div>
+      <span id="result_main_genre"> user_genre_1, </span> <span id="result_second_genre"> user_genre_2 </span><!-- <span
+      class="result_word">입니다</span> -->
+    </div>
 
 
-   <!--메인장르 컨텐츠-->
-   <div class=genre_contents>
-      <h1 id="main_genre_title"></h1>
+    <!--메인장르 컨텐츠-->
+    <div class = genre_contents>
+      <h1 id = "main_genre_title">user_genre_1</h1>
 
-      <div class="card-deck" id="cards_box_1">
-
-      </div>
-   </div>
-
-   <!--세컨장르 컨텐츠-->
-   <div class=genre_contents>
-      <h1 id="second_genre_title"></h1>
-      <div class="card-deck" id="cards_box_2">
+      <div class="card-deck" id="movies1">
+        <!--첫번째장르 첫번쨰추천영화-->
 
       </div>
-   </div>
+    </div>
 
-</body>
-</html>
+    <!--세컨장르 컨텐츠-->
+    <div class = genre_contents>
+      <h1 id = "second_genre_title">user_genre_2</h1>
+      <div class="card-deck" id="movies2">
+
+
+
+      </div>
+    </div>
+
+  </body>
+  </html>
