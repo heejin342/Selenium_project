@@ -1,274 +1,391 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>두번째 페이지</title>
+  <title>두번째 페이지</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <!-- 구글폰트 -->
-    <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap&subset=korean" rel="stylesheet">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+  <!-- 구글폰트 -->
+  <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap&subset=korean" rel="stylesheet">
 
-    <script>
-        var imgs_1 = new Array()
-        var imgs_2 = new Array()
-        var poster_1 = new Array()
-        var poster_2 = new Array()
-        var title_1 = new Array()
-        var title_2 = new Array()
-        var summary_1 = new Array()
-        var summary_2 = new Array()
-        var director_1 = new Array()
-        var director_2 = new Array()
-        var actor_1 = new Array()
-        var actor_2 = new Array()
-
-        var next = 1;
-        var temp_title="";
-        var cnt = 0;
-	    listing();
+  <script>
+    var imgs_1 = new Array()
+    var imgs_2 = new Array()
+    var poster_1 = new Array()
+    var poster_2 = new Array()
+    var title_1 = new Array()
+    var title_2 = new Array()
+    var summary_1 = new Array()
+    var summary_2 = new Array()
+    var director_1 = new Array()
+    var director_2 = new Array()
+    var actor_1 = new Array()
+    var actor_2 = new Array()
 
 
-        function cng(img){
-            if (cnt == imgs_1.length -1){
-               update_user('드라마', 'SF')
-               $('.movie').remove()
-               add_button_html = '<button id=button_result onclick="btn_result()">결과를 확인하시겠습니까?</button>'
-               $('.contents').append(add_button_html)
-               <!-- 이거 왜 버튼 추가되면 배경이 반토막 나는지 정말모르겠어 .. 왜일까 ...? -->
-            }
-            $('#movie_poster1').attr('src',imgs_1[next].src)
-            $('#movie_poster2').attr('src',imgs_2[next].src)
-            $('#movie_title1').text(title_1[next])
-            $('#movie_title2').text(title_2[next])
-            $('#movie_summary1').text(summary_1[next])
-            $('#movie_summary2').text(summary_2[next])
-            $('#movie_director1').text(director_1[next])
-            $('#movie_director2').text(director_2[next])
-            $('#movie_actor1').text(actor_1[next])
-            $('#movie_actor2').text(actor_2[next])
+    var next = 1;
+    var title_temp="";
+    var cnt = 0;
+    listing();
 
-            next++;
 
-            next%=imgs_1.length;
 
-            cnt++;
-        }
+    function movie_click1(){
+      let m_title1 = $('#movie_title1').text();
+      console.log(m_title1)
+      $.ajax({
+              type: "POST", // POST 방식으로 요청하겠다.
+              url: "/selected_movie", // /post라는 url에 요청하겠다.
+              data: { m_title_give : m_title1},
 
-        function show(all_poster,all_title,all_summary,all_actor,all_director){
-
-            for(var i= 0 ; i <= all_poster.length/2-1 ; i++){
-            poster_1[i]=all_poster[i].split('\n')[1]
-            poster_2[i]=all_poster[i + all_poster.length/2].split('\n')[1]
-            summary_1[i]=all_summary[i].split('\n')[1]
-            summary_2[i]=all_summary[i + all_poster.length/2].split('\n')[1]
-            director_1[i]=all_director[i].split('\n')[1]
-            director_2[i]=all_director[i + all_poster.length/2].split('\n')[1]
-            title_1[i]=all_title[i].split('\n')[1]
-            title_2[i]=all_title[i + all_poster.length/2].split('\n')[1]
-            actor_1[i]=all_actor[i].split('\n')[1]
-            actor_2[i]=all_actor[i + all_poster.length/2].split('\n')[1]
-            }
-
-            for(var i = 0 ; i<poster_1.length; i++){
-                imgs_1[i] = new Image()
-                imgs_2[i] = new Image()
-
-                imgs_1[i].src = poster_1[i]
-                imgs_2[i].src = poster_2[i]
-            }
-        }
-
-        function listing(){
-            $.ajax({
-                type: "GET",
-                url: "/user",
-                data: {},
-                success: function(response){
-                    let Long_movie_list = response['Long_movie_list'];
-                    all_title = new Array();
-                    all_poster = new Array();
-                    all_director = new Array();
-                    all_actor = new Array();
-                    all_summary = new Array();
-                    all_main_genre = new Array();
-                    all_second_genre = new Array();
-                     <!-- 사진 20번 바뀐다 == 20번 대결 -->
-                    for (let i = 0; i < 40; i++) {
-                        random = Math.floor(Math.random() * Long_movie_list.length)
-
-                        title = Long_movie_list[random]['title']
-                        <!--바로 전 영화랑 중복이 뜨지 않음. 근데 장르 비교에 굳이 전부 안겹칠 필요는 없다고 생각해서 이정도 조건만 걸어놓을게-->
-                        if(title == temp_title){
-                            title = Long_movie_list[random]['title']
-                        }
-                        poster = Long_movie_list[random]['poster']
-                        director = Long_movie_list[random]['director']
-                        actor = Long_movie_list[random]['actor']
-                        summary = Long_movie_list[random]['summary']
-                        if (summary.length > 50){
-                           summary = summary.substr(0,50)+"..."
-                        }
-                        main_genre = Long_movie_list[random]['main_genre']
-                        second_genre = Long_movie_list[random]['second_genre']
-                        title_temp = title
-
-                        all_title.push(title)
-                        all_poster.push(poster)
-                        all_director.push(director)
-                        all_actor.push(actor)
-                        all_summary.push(summary)
-                        all_main_genre.push(main_genre)
-                        all_second_genre.push(second_genre)
-                    }
-                    $('#movie_title1').text(all_title[0])
-                    $('#movie_title2').text(all_title[all_poster.length/2])
-                    $('#movie_summary1').text(all_summary[0])
-                    $('#movie_summary2').text(all_summary[all_poster.length/2])
-                    $('#movie_director1').text(all_director[0])
-                    $('#movie_director2').text(all_director[all_poster.length/2])
-                    $('#movie_actor1').text(all_actor[0])
-                    $('#movie_actor2').text(all_actor[all_poster.length/2])
-                    $('#movie_poster1').attr('src',all_poster[0].split('\n')[1])
-                    $('#movie_poster2').attr('src',all_poster[all_poster.length/2].split('\n')[1])
-
-                    show(all_poster,all_title,all_summary,all_actor,all_director)
-                }
+              success: function(response){}
             })
-        }
 
-        <!--결과 선택 완료-->
-        function update_user(genre_1,genre_2){
-			$.ajax({
-              	type: "POST",
-              	url: "/userupdate",
-              	data: {
-               	 genre_1:genre_1,
-               	 genre_2:genre_2
-              	},
-              	success: function(response){
-              	console.log(response)
-              	}
+
+    }
+
+    function movie_click2(){
+      let m_title2 = $('#movie_title2').text();
+      console.log(m_title2)
+      $.ajax({
+              type: "POST", // POST 방식으로 요청하겠다.
+              url: "/selected_movie", // /post라는 url에 요청하겠다.
+              data: { m_title_give : m_title2},
+
+              success: function(response){}
             })
-		}
 
-		function btn_result(){
-            location.href="/page3"
+    }
+
+
+
+    function cng(img){
+      if (cnt == imgs_1.length -1){
+       update_user('드라마', 'SF')
+       $('.movie').remove()
+       $('.progress').remove()
+       add_button_html = '<button id=button_result onclick="btn_result()"> Result </button>'
+       $('.contents').append(add_button_html)
+       <!-- 이거 왜 버튼 추가되면 배경이 반토막 나는지 정말모르겠어 .. 왜일까 ...? -->
+     }
+
+     all_number = new Array();
+
+     number = 5 * next
+     console.log(number)
+
+     all_number.push(number)
+     $('#progress-bar').text(number+'%')
+     $('#progress-bar').attr('style', 'width:' + number+'%')
+
+     $('#movie_poster1').attr('src',imgs_1[next].src)
+     $('#movie_poster2').attr('src',imgs_2[next].src)
+     $('#movie_title1').text(title_1[next])
+     $('#movie_title2').text(title_2[next])
+     $('#movie_summary1').text(summary_1[next])
+     $('#movie_summary2').text(summary_2[next])
+     $('#movie_director1').text(director_1[next])
+     $('#movie_director2').text(director_2[next])
+     $('#movie_actor1').text(actor_1[next])
+     $('#movie_actor2').text(actor_2[next])
+
+     next++;
+
+     next%=imgs_1.length;
+
+     cnt++;
+   }
+
+   function show(all_poster,all_title,all_summary,all_actor,all_director){
+    var i1 = 0
+    var i2 = 0
+    for(var i= 0 ; i <= all_poster.length-1 ; i++){
+      if(i%2==0){
+       poster_1[i1]=all_poster[i].split('\n')[1].split('?')[0]
+       summary_1[i1]=all_summary[i].split('\n')[1]
+       director_1[i1]=all_director[i].split('\n')[1]
+       title_1[i1]=all_title[i].split('\n')[1]
+       actor_1[i1]=all_actor[i].split('\n')[1]
+       i1=i1+1
+     }
+     else{
+      poster_2[i2]=all_poster[i].split('\n')[1].split('?')[0]
+      summary_2[i2]=all_summary[i].split('\n')[1]
+      director_2[i2]=all_director[i].split('\n')[1]
+      title_2[i2]=all_title[i].split('\n')[1]
+      actor_2[i2]=all_actor[i].split('\n')[1]
+      i2= i2+1
+    }
+  }
+
+  for(var i = 0 ; i<poster_1.length; i++){
+    imgs_1[i] = new Image()
+    imgs_2[i] = new Image()
+
+    imgs_1[i].src = poster_1[i]
+    imgs_2[i].src = poster_2[i]
+  }
+}
+
+function listing(){
+  $.ajax({
+    type: "GET",
+    url: "/user",
+    data: {},
+    success: function(response){
+      let Long_movie_list = response['Long_movie_list'];
+      all_title = new Array();
+      all_poster = new Array();
+      all_director = new Array();
+      all_actor = new Array();
+      all_summary = new Array();
+      all_main_genre = new Array();
+      all_second_genre = new Array();
+      <!-- 사진 20번 바뀐다 == 20번 대결 -->
+      for (let i = 0; i < 40; i++) {
+        random = Math.floor(Math.random() * Long_movie_list.length)
+        title = Long_movie_list[random]['title']
+        if(title==title_temp){
+          random= random+1
+          title = Long_movie_list[random]['title']
         }
+        poster = Long_movie_list[random]['poster']
+        director = Long_movie_list[random]['director']
+        actor = Long_movie_list[random]['actor']
+        summary = Long_movie_list[random]['summary']
+        if (summary.length > 100){
+         summary = summary.substr(0,100)+"..."
+       }
+       main_genre = Long_movie_list[random]['main_genre']
+       second_genre = Long_movie_list[random]['second_genre']
+       title_temp = title
 
-    </script>
+       all_title.push(title)
+       all_poster.push(poster)
+       all_director.push(director)
+       all_actor.push(actor)
+       all_summary.push(summary)
+       all_main_genre.push(main_genre)
+       all_second_genre.push(second_genre)
+     }
+     $('#movie_title1').text(all_title[0].split('\n')[1])
+     $('#movie_title2').text(all_title[1].split('\n')[1])
+     $('#movie_summary1').text(all_summary[0])
+     $('#movie_summary2').text(all_summary[1])
+     $('#movie_director1').text(all_director[0])
+     $('#movie_director2').text(all_director[1])
+     $('#movie_actor1').text(all_actor[0])
+     $('#movie_actor2').text(all_actor[1])
+     $('#movie_poster1').attr('src',all_poster[0].split('\n')[1].split('?')[0])
+     $('#movie_poster2').attr('src',all_poster[1].split('\n')[1].split('?')[0])
+
+     show(all_poster,all_title,all_summary,all_actor,all_director)
+   }
+ })
+}
 
 
-    <style type="text/css">
-      .wrap {
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: center;
-      }
-      .bg_img{
-         background-image: url( "static/bg_poster_dark.png" );
-      }
-      .contents{
-         border: 1px solid;
-         border-radius: 30px;
-         background-color: #231f20;
-         margin-top:100px;
-         margin-bottom: 100px;
-      }
-      .title {
-         text-align: center;
-         font-size: 60px;
-         margin-top: 50px;
-         color:white;
-      }
-      .center {
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: center;
-      }
-      .movie_contents {
-         display: flex;
-         flex-direction: column;
-         align-items: center;
-         justify-content: center;
-         margin-top: 50px;
-         margin-bottom: 50px;
-         width: 1000px;
-         font-family: 'Poor Story', sans-serif;
-      }
-      .movie{
-         width:300px;
-         margin-right: 50px;
-         margin-left: 50px;
-         margin-top: 10px;
-         text-align: center;
-      }
-      .movie:hover{
-         /*visibility: hidden;*/
-         transform: scale(1.3);
-      }
-      #movie_title1{
-         font-weight: bold;
-      }
-      #movie_title2{
-         font-weight: bold;
-      }
-    </style>
+$(document).ready(function(){
+ $('#customer_email').html('');
+ customer_info();
+});
+
+function customer_info(){
+ $.ajax({
+  type: "GET",
+  url: "/customer",
+  data: {},
+  success: function(response){
+   if (response['result'] == 'success') {
+    let userdb = response['userdb'];
+    email_head(userdb[userdb.length-1]['email']);
+  } else {
+    alert('이메일을 받아오지 못했습니다');
+  }
+}
+})
+}
+
+
+function email_head(email){
+ let temp_html = email;
+ $('#customer_email').append(temp_html);
+}
+
+
+<!--결과 선택 완료-->
+function update_user(genre_1,genre_2){
+ $.ajax({
+   type: "POST",
+   url: "/userupdate",
+   data: {
+     genre_1:genre_1,
+     genre_2:genre_2
+   },
+   success: function(response){
+     console.log(response)
+   }
+ })
+}
+
+function btn_result(){
+  location.href="/page3"
+}
+
+</script>
+
+
+<style type="text/css">
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .bg_img{
+    background-image: url( "static/bg_poster_dark.png" );
+  }
+  .contents{
+    border: 1px solid;
+    border-radius: 30px;
+    background-color: #231f20;
+    margin-top:100px;
+    margin-bottom: 100px;
+
+  }
+
+  #button_result{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    border: 0.5px solid;
+    border-radius: 20px;
+    background-color: white;
+    width:150px;
+    height:60px;
+    font-size: 20pt;
+    font-family: 'Poor Story', sans-serif;
+    font-weight: bold;
+
+  }
+
+
+  .title_logo_img{
+   text-align: center;
+   margin-top: 50px;
+ }
+
+ .title {
+   text-align: center;
+   font-size: 100px;
+   margin-top: 1px;
+   color:white;
+   font-family: 'Poor Story', sans-serif;
+ }
+
+ #customer_email{
+   color: white;
+   text-align: right;
+   margin-right: 50px;
+   margin-top:10px;
+ }
+
+ .center {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+ }
+ .movie_contents {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   margin-top: 50px;
+   margin-bottom: 50px;
+   width: 1000px;
+   font-family: 'Poor Story', sans-serif;
+ }
+ .movie{
+   width:300px;
+   margin-right: 50px;
+   margin-left: 50px;
+   margin-top: 10px;
+   text-align: center;
+ }
+ .movie:hover{
+   /*visibility: hidden;*/
+   transform: scale(1.3);
+ }
+ #movie_title1{
+   font-weight: bold;
+ }
+ #movie_title2{
+   font-weight: bold;
+ }
+</style>
 
 </head>
 <body>
-<div class="wrap bg_img">
+  <div class="wrap bg_img">
     <div class="contents">
-        <div class="title">나의 선호 장르 찾기</div>
-        <div class="movie_contents">
-            <div class="card-deck">
-                <!--첫번쨰 영화-->
-                <div class="movie">
-                    <div class="card" style="width: 18rem;">
-                        <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster1" src="" alt="Card image cap"
-                         onclick="cng(this)">
-                        <div class="card-body">
-                            <h5 class="card-title" id="movie_title1"></h5>
-                            <p class="card-text" id="movie_summary1"></p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" id="movie_director1"></li>
-                            <li class="list-group-item" id="movie_actor1"></li>
-                        </ul>
-                    </div>
-                </div>
-                <!--두번쨰 영화-->
-                <div class="movie">
-                    <div class="card" style="width: 18rem;">
-                        <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster2" src="" alt="Card image cap"
-                         onclick="cng(this)">
-                        <div class="card-body">
-                            <h5 class="card-title" id="movie_title2"></h5>
-                            <p class="card-text" id="movie_summary2"></p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" id="movie_director2"></li>
-                            <li class="list-group-item" id="movie_actor2"></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+     <div id= "customer_email">asdf@naver.com</div>
+     <div class="progress">
+      <div class="progress-bar" id="progress-bar" role="progressbar" style="" aria-valuenow="number" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <div class = "title_logo_img"><img src="static/logo.png" style="width:110px; height:80px"></div>
+    <div class="title">Find My Genre</div>
+    <hr style="background-color: white; width: 800px; height: 1px;">
+    <div class="movie_contents">
+     <div class="card-deck">
+       <!--첫번쨰 영화-->
+       <div class="movie">
+         <div class="card" style="width: 18rem;">
+           <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster1" src="" alt="Card image cap"
+           onclick="movie_click1(); cng(this);">
+           <div class="card-body">
+             <h5 class="card-title" id="movie_title1"></h5>
+             <p class="card-text" id="movie_summary1"></p>
+           </div>
+           <ul class="list-group list-group-flush">
+             <li class="list-group-item" id="movie_director1"></li>
+             <li class="list-group-item" id="movie_actor1"></li>
+           </ul>
+         </div>
+       </div>
+       <!--두번쨰 영화-->
+       <div class="movie">
+         <div class="card" style="width: 18rem;">
+           <img style="border:10px ridge wheat" class="card-img-top" id="movie_poster2" src="" alt="Card image cap"
+           onclick="movie_click2(); cng(this);">
+           <div class="card-body">
+             <h5 class="card-title" id="movie_title2"></h5>
+             <p class="card-text" id="movie_summary2"></p>
+           </div>
+           <ul class="list-group list-group-flush">
+             <li class="list-group-item" id="movie_director2"></li>
+             <li class="list-group-item" id="movie_actor2"></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>
 </body>
 </html>

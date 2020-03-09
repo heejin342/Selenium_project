@@ -1,147 +1,232 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>네번째 페이지</title>
+   <title>네번째 페이지</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <!-- JS -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+   crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+   crossorigin="anonymous"></script>
 
-    <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+   <script>
+      var title=""
+      listing2();
 
-    <script>
-        var title=""
-        listing2();
+      function naver_click(){
+         <!--이거 정확도 높이려면 검색할때 감독까지 같이 검색해야할듯-->
+         naver_url="https://movie.naver.com/movie/search/result.nhn?query=" + title + "&section=all&ie=utf8"
+         location.href=naver_url
+      }
 
-        function naver_click(){
-            <!--이거 정확도 높이려면 검색할때 감독까지 같이 검색해야할듯-->
-		    naver_url="https://movie.naver.com/movie/search/result.nhn?query=" + title + "&section=all&ie=utf8"
-		    location.href=naver_url
-        }
+      function daum_click(){
+         daum_url="http://cinefox.com/smart/search?q=" + title
+         location.href=daum_url
+      }
 
-        function daum_click(){
-            daum_url="http://cinefox.com/smart/search?q=" + title
-		    location.href=daum_url
-        }
-
-        function recommend(random_director, all_byDirector){
-
-			director = random_director.split('\n')[1]
-        	$('#result_main_genre').text(director)
-
-        	poster = all_byDirector['poster'].split('\n')[1]
-			$('#maingenre_movie_poster1').attr('src',poster)
-
-			title = all_byDirector['title'].split('\n')[1]
-			$('#maingenre_movie_title1').text(title)
-
-			summary = all_byDirector['summary'].split('\n')[1]
-			$('#maingenre_movie_summary1').text(summary)
-
-            return title;
-        }
+      function recommend(random_director, all_byDirector){
 
 
-        function listing2(){
-			$.ajax({
-				type: "GET",
-				url: "/main",
-				data: {},
-				success: function(response){
-					let ART_movie_list = response['ART_movie_list'];
 
-					do{
-						random = Math.floor(Math.random() * ART_movie_list.length)
-						random_director = ART_movie_list[random]['director']
-					}while(random_director == '<감독>\nNONE')
+         director = random_director.split('\n')[1]
+         $('#result_main_genre').text(director)
 
-				 	all_byDirector = ART_movie_list[random]
+         poster = all_byDirector['poster'].split('\n')[1]
+         $('#maingenre_movie_poster1').attr('src',poster)
 
-					recommend(random_director, all_byDirector)
-				}
-			})
-		}
-    </script>
+         title = all_byDirector['title'].split('\n')[1]
+         $('#maingenre_movie_title1').text(title)
+
+         summary = all_byDirector['summary'].split('\n')[1]
+         if (summary.length > 300){
+            summary = summary.substr(0,300)+"..."
+         }
+         $('#maingenre_movie_summary1').text(summary)
 
 
-    <style type="text/css">
 
-		.result_contents{
-			width:cover;
-			height: 150px;
-			background-color: grey;
-			text-align: center;
-			margin-top: 50px;
-		}
 
-		.result_title{
-			font-size: 26pt;
-			padding-top: 30px;
-		}
+         return title;
+      }
 
-		#result_main_genre{
-			font-size: 36pt;
-		}
-		.result_word{
-			font-size: 26pt;
-		}
 
-		.genre_contents{
-			margin-top: 50px;
-			margin-left: 300px;
-			margin-right: 300px;
-		}
+      function listing2(){
+         $.ajax({
+            type: "GET",
+            url: "/main",
+            data: {},
+            success: function(response){
+               let ART_movie_list = response['ART_movie_list'];
 
-		.movie_title{
-			font-weight: bold;
-			text-align: center;
-		}
+               do{
+                  random = Math.floor(Math.random() * ART_movie_list.length)
+                  random_director = ART_movie_list[random]['director']
+               }while(random_director == '<감독>\nNONE')
 
-		#main_genre_title{
-			text-align: center;
+               all_byDirector = ART_movie_list[random]
 
-		}
-    </style>
+               recommend(random_director, all_byDirector)
+            }
+         })
+      }
+
+
+      function btn_main_page(){
+         location.href="/"
+      }
+   </script>
+
+
+   <style type="text/css">
+
+
+      .page_title{
+         margin-top: 40px;
+         text-align: center;
+         font-size: 50pt;
+         font-weight: bold;
+
+      }
+
+      .result_contents{
+         border: 1px solid;
+         border-radius: 30px;
+         width:800px;
+         height: 150px;
+         background-color: #231f20;
+         text-align: center;
+         margin-top: 10px;
+         margin-right: auto;
+         margin-left: auto;
+         padding-bottom: 15px;
+      }
+
+      .result_title{
+         font-size: 26pt;
+         padding-top: 10px;
+         color:white;
+      }
+
+      #result_main_genre{
+         font-size: 36pt;
+      }
+      .result_word{
+         font-size: 21pt;
+         color:white;
+         margin-top: 5px;
+      }
+
+      .main_contents{
+         border: 0px solid;
+         border-radius: 30px;
+         width:800px;
+         margin-right: auto;
+         margin-left: auto;
+         margin-top : 50px;
+         margin-bottom: 50px;
+         padding: 50px 30px 30px 30px;
+         background-color:white;
+      }
+
+
+      #main_genre_title{
+         text-align: center;
+      }
+
+      #maingenre_movie_poster1{
+         border:0px solid;
+         border-radius: 15px 15px;
+      }
+
+      #maingenre_movie_title1{
+         font-weight: bold;
+         padding-top: 20px
+      }
+
+      #naver_link{
+         border:0px solid;
+         float: right;
+         background-color: white;
+      }
+
+      #daum_link{
+         border:0px solid;
+         float: right;
+         background-color: white;
+      }
+
+      #main_page_btn{
+         text-align: center;
+         margin-top: 40px;
+         display: block;
+         margin-right: auto;
+         margin-left: auto;
+         border:0px solid;
+         border-radius: 10px;
+         width: 120px;
+         height:40px;
+         font-size: 15pt;
+         background-color:black;
+         color:white;
+      }
+
+      img{
+         -webkit-perspective: 1;
+      }
+   </style>
 
 
 </head>
 <body style="background-color:lightgrey">
 
-<div class="result_contents">
-    <div class="result_title"></div>
-    <br>
-    <span id="result_main_genre">  </span> <span class="result_word">감독의 영화를 추천합니다</span>
-</div>
+   <div>
+      <div class = "page_title"> Today Recommend </div>
+      <div class="result_contents">
+         <div class="result_title"><span id="result_main_genre">  </span></div>
+         <div class="result_word">감독의 영화를 추천합니다</div>
+      </div>
 
-<div class=genre_contents>
-    <div class="card-deck">
-        <div class="card">
-            <img class="card-img-top" id="maingenre_movie_poster1" src="" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title movie_title" id="maingenre_movie_title1"></h5>
-                <p class="card-text" id="maingenre_movie_summary1"></p>
-<!--        		<a href="" id="naver_link"> <img src="static/naver.PNG" style="width:100px; height:100px"></a>-->
-<!--        		<a href="" id="daum_link"> <img src="static/daum.PNG" style="width:100px; height:100px"></a>-->
-        		<button id="naver_link" onclick="naver_click()"> <img src="static/naver.PNG" style="width:100px; height:100px;"></button>
-        		<button id="daum_link" onclick="daum_click()"> <img src="static/daum.PNG" style="width:100px; height:100px"></button>
-
+      <div class=" main_contents">
+         <div class="media">
+            <img class="mr-3" id="maingenre_movie_poster1" src="" alt="Generic placeholder image">
+            <div class="media-body">
+               <h5 class="mt-0"id="maingenre_movie_title1"></h5>
+               <p class="summary-text" id="maingenre_movie_summary1"></p>
+               <button id="naver_link" onclick="naver_click()"> <img src="static/naver.PNG" style="width:50px; height:50px;"></button>
+               <button id="daum_link" onclick="daum_click()"> <img src="static/daum.PNG" style="width:50px; height:50px"></button>
             </div>
-                <a href="/" style="text-align:right;font-size:30px"> -> go to main page</a>
-		</div>
-    </div>
-</div>
+         </div>
 
-
+         <button id="main_page_btn" onclick="btn_main_page()">MAIN</button>
+      </div>
+   </div>
 </body>
 </html>
+
+<!--    <div class=genre_contents>
+      <div class="card-deck">
+         <div class="card">
+            <img class="card-img-top" id="maingenre_movie_poster1" src="" alt="Card image cap">
+            <div class="card-body">
+               <h5 class="card-title movie_title" id="maingenre_movie_title1"></h5>
+               <p class="card-text" id="maingenre_movie_summary1"></p>
+                             <a href="" id="daum_link"> <img src="static/daum.PNG" style="width:100px; height:100px"></a>
+               <button id="naver_link" onclick="naver_click()"> <img src="static/naver.PNG" style="width:100px; height:100px;"></button>
+               <button id="daum_link" onclick="daum_click()"> <img src="static/daum.PNG" style="width:100px; height:100px"></button>
+
+            </div>
+            <a href="/" style="text-align:right;font-size:30px"> -> go to main page</a>
+         </div>
+      </div>
+   </div> -->
+

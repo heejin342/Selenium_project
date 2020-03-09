@@ -2,266 +2,354 @@
 <html lang="ko">
 
 <head>
-    <title>첫번째 페이지</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+  <title>첫번째 페이지</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Gamja+Flower&display=swap&subset=korean" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poor+Story&display=swap&subset=korean" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
 
-    <script>
-
+  <script>
+    var users = new Array()
     listing2()
 
-	function listing2(){
-        $.ajax({
-            type: "GET",
-            url: "/main",
-            data: {},
-            success: function(response){
-                ran=Math.floor(Math.random() * 3) + 1
-                if(ran==1){
-                    $('#video_random').attr('src','https://tv.naver.com/embed/12431518?autoPlay=true')
-                }
-                else if(ran==2){
-                    $('#video_random').attr('src','https://tv.naver.com/embed/11646841?autoPlay=true')
-                }
-                else if(ran==3){
-                    $('#video_random').attr('src','https://tv.naver.com/embed/12317390?autoPlay=true')
-                }
-            }
-        })
+    function listing2(){
+      $.ajax({
+        type: "GET",
+        url: "/main",
+        data: {},
+        success: function(response){
+          ran=Math.floor(Math.random() * 5) + 1
+          if(ran==1){
+            $('#video_random').attr('src','https://tv.naver.com/embed/12431518?autoPlay=true')
+          }
+          else if(ran==2){
+            $('#video_random').attr('src','https://tv.naver.com/embed/11646841?autoPlay=true')
+          }
+          else if(ran==3){
+            $('#video_random').attr('src','https://tv.naver.com/embed/12317390?autoPlay=true')
+          }
+          else if(ran==4){
+            $('#video_random').attr('src','https://tv.naver.com/embed/11646898?autoPlay=true')
+          }
+          else if(ran==5){
+            $('#video_random').attr('src','https://tv.naver.com/embed/11646783?autoPlay=true')
+          }
+        }
+      })
     }
 
+    function check_user(){
+     let email = $('#inputEmail').val();
+     let pwd = $('#inputPassword').val();
+     if (users.length==0)
+       alert('회원이 확인되지 않습니다. 회원가입을 해주세요')
+     else if(users.length > 0){
+       if (users[0]['email'] == email || users[0]['pwd'] == pwd){
+         make_userdb(email, pwd);
+       }
+     }
+   }
 
-<!--		function show_poster(all_poster){-->
-<!--		    for(var i= 0 ; i<1 ; i++){-->
-<!--			    poster_one = all_poster[i].split('\n')[1]-->
-<!--			    temp_html3 = "<img src= " + poster_one + " style='width:500px ;height:450px'>"-->
-<!--			    $('#z').append(temp_html3)-->
-<!--            }-->
-<!--		}-->
+   function register(){
 
-<!--		function listing2(){-->
-<!--			$.ajax({-->
-<!--				type: "GET",-->
-<!--				url: "/main",-->
-<!--				data: {},-->
-<!--				success: function(response){-->
-<!--					let ART_movie_list = response['ART_movie_list'];-->
-<!--				    all_poster = new Array();-->
-<!--					random = Math.floor(Math.random() * ART_movie_list.length)-->
-<!--					poster = ART_movie_list[random]['poster']-->
-<!--                    if(poster.indexOf("noimage") != -1){-->
-<!--                        listing2()-->
-<!--                        return;-->
-<!--                    }-->
-<!--					all_poster.push(poster)-->
-<!--					show_poster(all_poster)-->
-<!--				}-->
-<!--			})-->
-<!--		}-->
+     email = $('#new_inputEmail').val()
+     pw1 = $('#new_inputPassword1').val()
+     pw2 = $('#new_inputPassword2').val()
+     if($('#new_inputPassword1').val().length < 5){
+      alert('비밀번호는 네자리 이상으로 입력해주세요');
+      $('#new_inputPassword1').focus();
+      return;
+    }
 
+    if(pw1 != pw2)
+     alert('비밀번호가 일치하지 않습니다.')
+   else{
+     users.push({'email':email , 'pwd':pw1})
+     alert('회원가입이 되셨습니다. 로그인해주세요')
+     $('#join').remove();
+     temp_html1 = '<div id = "login", style="padding-top:70px;"><h1 class="cover-heading" style="text-align: center">Please log-in</h1><div class="form-label-group"><input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="inputPassword" class="form-control" placeholder="Password" required><label for="inputPassword">Password</label></div><div class="checkbox mb-3"><label><input type="checkbox" value="remember-me"> Remember me</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="ccclick()" > <b>Login</button></div></div>'
+     $('.cover').append(temp_html1)
+   }
+ }
 
-		function make_userdb(){
-			let email = $('#inputEmail').val();
-			let pwd = $('#inputPassword').val();
-			$.ajax({
-              	type: "POST",
-              	url: "/user",
-              	data: {
-               	 email:email,
-               	 pwd:pwd,
-               	 genre_1:"",
-               	 genre_2:""
-              	},
-              	success: function(response){
-              	console.log(response)
-              	}
+ function make_userdb(email, pwd){
+   $.ajax({
+    type: "POST",
+    url: "/customer",
+    data: {
+     email:email,
+     pwd:pwd,
+     genre_1:"",
+     genre_2:""
+   },
+   success: function(response){
+     console.log(response)
+   }
+ })
+   alert(email+' 로 로그인 되었습니다.')
+   login_state();
+ }
+
+ function login_state(){
+
+             //$(document).ready(function(){
+              $('#menubar').html('');
+              customer_info();
+             //});
+
+             function customer_info(){
+              $.ajax({
+               type: "GET",
+               url: "/customer",
+               data: {},
+               success: function(response){
+                if (response['result'] == 'success') {
+                  let userdb = response['userdb'];
+                  email_head(userdb[userdb.length-1]['email']);
+                } else {
+                  alert('이메일을 받아오지 못했습니다');
+                }
+              }
             })
-			alert(email+' 로 로그인 되었습니다.')
-		}
+            }
 
-		function ccclick(){
+            function email_head(email){
+              let temp_html = email;
+              $('#customer_email').append(temp_html);
+              select_button();
+            }
 
-			if($('#inputEmail').val() == ""){
-				alert('이메일을 입력하세요');
-				$('#inputEmail').focus();
-				return;
-			}
-			if($('#inputPassword').val() == ""){
-				alert('비밀번호를 입력하세요');
-				$('#inputPassword').focus();
-				return;
-			}
+            function select_button(){
+              button_movepage = "<button id=button_result onclick='go_page4()'>오늘의 추천영화 보기</button> <button id=button_result onclick='go_page2()'>선호장르 알아보기</button>"
+              $('.cover').html('')
+              $('.cover').append(button_movepage)
+            }
+          }
 
-			if($('#inputPassword').val().length < 5){
-				alert('비밀번호는 네자리 이상으로 입력해주세요');
-				$('#inputPassword').focus();
-				return;
-			}
 
-			let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-			if((regEmail.test($('#inputEmail').val())==false)){
-				alert('이메일 형식이 틀렸습니다');
-				$('#inputEmail').focus();
-				return;
-			}
+          function ccclick(){
 
-			if((regEmail.test($('#inputEmail').val())==true)){
-				make_userdb();
-                button_movepage = "<button id=go_page4 onclick='go_page4()'>오늘의 추천영화 보기</button> <button id=go_page2 onclick='go_page2()'>선호장르 알아보기</button>"
-                $('.cover').append(button_movepage)
-			}
-		}
+           if($('#inputEmail').val() == ""){
+            alert('이메일을 입력하세요');
+            $('#inputEmail').focus();
+            return;
+          }
+          if($('#inputPassword').val() == ""){
+            alert('비밀번호를 입력하세요');
+            $('#inputPassword').focus();
+            return;
+          }
+
+          let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+          if((regEmail.test($('#inputEmail').val())==false)){
+            alert('이메일 형식이 틀렸습니다');
+            $('#inputEmail').focus();
+            return;
+          }
+
+          if((regEmail.test($('#inputEmail').val())==true)){
+            check_user();
+          }
+        }
 
         function btn_login(){
-            $('#video_random').remove();
-            $('#join').remove();
+         $('#video_random').remove();
+         $('#join').remove();
+         $('.cover').html('');
 
-            temp_html1 = '<div id = "login"><h1 class="cover-heading" style="text-align: center">Please log-in</h1><div class="form-label-group"><input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="inputPassword" class="form-control" placeholder="Password" required><label for="inputPassword">Password</label></div><div class="checkbox mb-3"><label><input type="checkbox" value="remember-me"> Remember me</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="ccclick()" > 확인</button></div></div>'
-            $('.cover').append(temp_html1)
-        }
+         temp_html1 = '<div id = "login", style="padding-top:70px;"><h1 class="cover-heading" style="text-align: center,">Please log-in</h1><div class="form-label-group"><input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="inputPassword" class="form-control" placeholder="Password" required><label for="inputPassword">Password</label></div><div class="checkbox mb-3"><label><input type="checkbox" value="remember-me"> Remember me</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="ccclick()" > <b>Login</button></div></div>'
+         $('.cover').append(temp_html1)
+       }
 
-        function btn_join(){
-            $('#video_random').remove();
-            $('#login').remove();
+       function btn_join(){
+         $('#video_random').remove();
+         $('#login').remove();
+         $('.cover').html('');
 
-            temp_html2 = '<div id = "join"><h1 class="cover-heading" style="text-align: center">Please register</h1><div class="form-label-group"><input type="email" id="new_inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="new_inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="new_inputPassword1" class="form-control" placeholder="Password" required><label for="new_inputPassword1">Password</label></div><div class="form-label-group"><input type="password" id="new_inputPassword2" class="form-control" placeholder="Password" required><label for="new_inputPassword2">Password again</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="show_poster1()"> join </button></div></div>'
-             $('.cover').append(temp_html2)
-        }
+         temp_html2 = '<div id = "join", style="padding-top:50px;"><h1 class="cover-heading" style="text-align: center">Please register</h1><div class="form-label-group"><input type="email" id="new_inputEmail" class="form-control" placeholder="Email address" required autofocus><label for="new_inputEmail">Email address</label></div><div class="form-label-group"><input type="password" id="new_inputPassword1" class="form-control" placeholder="Password" required><label for="new_inputPassword1">Password</label></div><div class="form-label-group"><input type="password" id="new_inputPassword2" class="form-control" placeholder="Password" required><label for="new_inputPassword2">Password again</label></div><div style="text-align:center;"><button type="button" class="btn btn-light" style="font-size:15px" onclick="register()"> <b>join </button></div></div>'
+         $('.cover').append(temp_html2)
+       }
 
-        function btn_home(){
-		    location.href="/"
-        }
-        function go_page2(){
-		    location.href="/page2"
-        }
-        function go_page4(){
-		    location.href="/page4"
-        }
+       function btn_home(){
+        location.href="/"
+      }
+      function go_page2(){
+        location.href="/page2"
+      }
+      function go_page4(){
+        location.href="/page4"
+      }
+
 
     </script>
 
     <style type="text/css">
-			a,
-			a:focus,
-			a:hover {
-				color: #fff;
-			}
+      a,
+      a:focus,
+      a:hover {
+       color: #fff;
+     }
 
-			html,
-			body {
-				height: 100%;
-				background-color: #333;
-			}
+     html,body{
+       height: 100%;
+       background-color: #333;
+     }
 
-			body {
-				display: -ms-flexbox;
-				display: flex;
-				color: #fff;
-				text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-				box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-			}
+     body {
+       display: -ms-flexbox;
+       display: flex;
+       color: #fff;
+       text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+       box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+     }
+     .masthead {
+      margin-bottom: 1px;
+    }
 
-<!--			.cover-container {-->
-<!--				max-width: 42em;-->
-<!--			}-->
+    .masthead-brand {
+      margin-bottom: 0px;
+    }
 
-			.masthead {
-				margin-bottom: 2rem;
-			}
+    .nav-masthead .nav-link {
+      padding: .25rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .5);
+      background-color: transparent;
+      border-bottom: .25rem solid transparent;
+    }
 
-			.masthead-brand {
-				margin-bottom: 0;
-			}
+    .nav-masthead .nav-link:hover,
+    .nav-masthead .nav-link:focus {
+      border-bottom-color: rgba(255, 255, 255, .25);
+    }
 
-			.nav-masthead .nav-link {
-				padding: .25rem 0;
-				font-weight: 700;
-				color: rgba(255, 255, 255, .5);
-				background-color: transparent;
-				border-bottom: .25rem solid transparent;
-			}
+    .nav-masthead .nav-link + .nav-link {
+      margin-left: 1rem;
+    }
 
-			.nav-masthead .nav-link:hover,
-			.nav-masthead .nav-link:focus {
-				border-bottom-color: rgba(255, 255, 255, .25);
-			}
+    .nav-masthead .active {
+      color: #fff;
+      border-bottom-color: #fff;
+    }
 
-			.nav-masthead .nav-link + .nav-link {
-				margin-left: 1rem;
-			}
+    @media (min-width: 48em) {
+      .masthead-brand {
+       float: left;
+     }
+     .nav-masthead {
+       float: right;
+     }
+   }
 
-			.nav-masthead .active {
-				color: #fff;
-				border-bottom-color: #fff;
-			}
+   .cover {
+    padding: 0 1.5rem;
+  }
 
-			@media (min-width: 48em) {
-				.masthead-brand {
-					float: left;
-				}
-				.nav-masthead {
-					float: right;
-				}
-			}
+  .cover-container{
+    max-width: 90em;
+  }
 
-			.cover {
-				padding: 0 1.5rem;
-			}
+  .mastfoot {
+    color: rgba(255, 255, 255, .5);
+  }
+/*  .main_video{
+    margin-top: 1px;
+    }*/
+    #video_random{
+      margin-top: 55px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-			.cover-container{
-				max-width: 42em;
-<!--				background-image : url("static/logo.png");-->
-<!--				background-size: cover;-->
-			}
+    #customer_email{
+      color:white;
+      text-align: right;
+    }
+    .select_button{
+      margin-top: 30px;
+    }
 
-			.mastfoot {
-				color: rgba(255, 255, 255, .5);
-			}
+    #button_result{
+      margin-bottom: 100px;
+      display: block;
+      margin-top: 45%;
+      margin-right: auto;
+      margin-left: auto;
+      border: 0.5px solid;
+      border-radius: 20px;
+      background-color: #404041;
+      width:280px;
+      height:70px;
+      font-size: 20pt;
+      color: white;
+      font-family: 'Poor Story', sans-serif;
+      font-weight: bold;
 
-			#video_random{
-			    margin:auto;
-			}
+    }
+    #background_image {
+      background-repeat : no-repeat;
+      background-size : cover;
+      /*width: auto;*/
+      /*height: auto;*/
+      /*margin: auto;*/
 
+      position: fixed;
+      top: 0;
+      left: 0;
 
-    </style>
+      /* Preserve aspet ratio */
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    #login{
+      margin-top:80px;
+      /*text-align: center;*/
+    }
+    #join{
+      margin-top:80px;
+    }
+
+  </style>
 </head>
-<body>
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <h3 class="masthead-brand">
-                <img src="static/logo.png" style="width:50px; height:50px" onclick="btn_home()">
-            </h3>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="#" id="btn_home" onclick="btn_home()">Home</a>
-                <a class="nav-link" href="#" id="btn_login" onclick="btn_login()">로그인</a>
-                <a class="nav-link" href="#" id="btn_join" onclick="btn_join()">회원가입</a>
-            </nav>
-        </div>
-    </header>
+<body id= "background_image" background ="static/영화관사진.jpg">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div class="masthead">
+      <div class="inner">
+        <h3 class="masthead-brand">
+          <img src="static/logo.png" style="width:70px; height:50px" onclick="btn_home()">
+        </h3>
+        <nav class="nav nav-masthead justify-content-center" id="menubar">
+          <a class="nav-link active" href="#" id="btn_home" onclick="btn_home()">Home</a>
+          <a class="nav-link" href="#" id="btn_login" onclick="btn_login()">로그인</a>
+          <a class="nav-link" href="#" id="btn_join" onclick="btn_join()">회원가입</a>
+        </nav>
+        <div id="customer_email"></div>
+      </div>
+    </div>
 
-    <iframe src='' id="video_random" frameborder='no' scrolling='no'
-            marginwidth='0' marginheight='0' WIDTH='544' HEIGHT='306' allow='autoplay' allowfullscreen></iframe>
+    <!--     <div class="main_video"> -->
+      <iframe src='' id="video_random" frameborder='no' scrolling='no'
+      marginwidth='0' marginheight='0' WIDTH='1050' HEIGHT='450' allow='autoplay' allowfullscreen></iframe>
+      <!--     </div> -->
 
-    <main role="main" class="inner cover" style=" margin-left:auto ; margin-right:auto; width: 370px" id="a">
-    </main>
+      <main role="main" class="inner cover" style=" color:#000000; margin-left:auto ; margin-right:auto; width: 370px " id="a">
+      </main>
 
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
-                    href="https://twitter.com/mdo">@mdo</a>.</p>
-        </div>
-    </footer>
-</div>
-</body>
-</html>
+      <footer class="mastfoot mt-auto">
+
+      </footer>
+    </div>
+  </body>
+  </html>

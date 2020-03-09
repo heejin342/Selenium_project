@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>세번째 페이지</title>
+    <title>세번째 페이지</title>
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <!-- JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
-  <script type="text/javascript">
-
-  // $(document).ready(function(){
-   //  $('#movies1').html('');
-   //  $('#movies2').html('');
-
-   //});
-
+    <script type="text/javascript">
 
    listing_genre1();
    listing_genre2();
@@ -39,8 +32,14 @@
       url: "/genre1_movie",
       data: {},
       success: function(response){
+        let user_genre_1 = response['user_genre_1']
+        console.log(user_genre_1)
+        $('#result_main_genre').append(user_genre_1+'/')
+        $('#main_genre_title').append(user_genre_1)
+
         if (response['result'] == 'success') {
           let movies = response['movies'];
+
           for (let i = 0; i < movies.length; i++) {
             movie_card(movies[i]['title'],movies[i]['poster'],movies[i]['director'],movies[i]['summary'])
           }
@@ -52,11 +51,8 @@
   }
 
   function movie_card(title,poster,director,summary){
-    // $('#maingenre_movie_title1').append(title);
-    // $('#maingenre_movie_poster1').append(poster);
-    // $('#maingenre_movie_director1').append(director);
-    // $('#maingenre_movie_summary1').append(summary);
-
+    if (summary.length > 250)
+        summary = summary.substr(0,250) + "..."
     let temp_html_1 = '<div class="card">\
     <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster+'" alt="Card image cap">\
     <div class="card-body">\
@@ -77,6 +73,11 @@
       url: "/genre2_movie",
       data: {},
       success: function(response){
+        let user_genre_2 = response['user_genre_2']
+        console.log(user_genre_2)
+        $('#result_second_genre').append(user_genre_2)
+        $('#second_genre_title').append(user_genre_2)
+
         if (response['result'] == 'success') {
           let movies = response['movies'];
           for (let i = 0; i < movies.length; i++) {
@@ -90,10 +91,8 @@
   }
 
   function movie_card2(title,poster,director,summary){
-    // $('#maingenre_movie_title1').append(title);
-    // $('#maingenre_movie_poster1').append(poster);
-    // $('#maingenre_movie_director1').append(director);
-    // $('#maingenre_movie_summary1').append(summary);
+    if (summary.length > 250)
+        summary = summary.substr(0,250) + "..."
 
     let temp_html_1 = '<div class="card">\
     <img class="card-img-top" id="maingenre_movie_poster1" src="'+poster+'" alt="Card image cap">\
@@ -106,11 +105,7 @@
     $('#movies2').append(temp_html_1);
 
   }
-
-
-
-
-</script>
+    </script>
 
 <style type="text/css">
 
@@ -118,7 +113,7 @@
     border: 1px solid;
     border-radius: 30px;
     width:800px;
-    height: 210px;
+    height: 300px;
     background-color: #231f20;
     text-align: center;
     margin-top: 50px;
@@ -171,41 +166,52 @@
 
   }
 
+  #movies1{
+    width:1200px;
+    display: auto;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 
+  #movies2{
+    width:1200px;
+    display: auto;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+  }
 
 
 </style>
-
 </head>
 <body>
 
-  <div class="result_contents">
-    <div class = "title_logo_img"><img src="static/logo.png" style="width:70px; height:50px"></div>
+<div class="result_contents">
+    <div class="title_logo_img"><img src="static/logo.png"></div>
     <div class="result_title">Your Genre Is</div>
-      <span id="result_main_genre"> user_genre_1, </span> <span id="result_second_genre"> user_genre_2 </span><!-- <span
-      class="result_word">입니다</span> -->
-    </div>
+    <span id="result_main_genre"> </span> <span id="result_second_genre"></span>
+</div>
 
 
-    <!--메인장르 컨텐츠-->
-    <div class = genre_contents>
-      <h1 id = "main_genre_title">user_genre_1</h1>
+<!--메인장르 컨텐츠-->
+<div class="genre_contents">
+    <h1 id="main_genre_title"></h1>
 
-      <div class="card-deck" id="movies1">
+    <div class="card-deck" id="movies1">
         <!--첫번째장르 첫번쨰추천영화-->
 
-      </div>
     </div>
+</div>
 
-    <!--세컨장르 컨텐츠-->
-    <div class = genre_contents>
-      <h1 id = "second_genre_title">user_genre_2</h1>
-      <div class="card-deck" id="movies2">
+<!--세컨장르 컨텐츠-->
+<div class="genre_contents" style="margin-bottom:5%">
+    <h1 id="second_genre_title"></h1>
+    <div class="card-deck" id="movies2">
 
 
-
-      </div>
     </div>
+</div>
 
-  </body>
-  </html>
+</body>
+</html>

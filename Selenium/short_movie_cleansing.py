@@ -7,6 +7,6 @@ db.ART_movie_list.update_many({'genre_1': '<장르1>' + '\n' + '공포(호러)'}
 
 db.ART_movie_list.update_many({'genre_2': '<장르2>' + '\n' + '공포(호러)'}, {'$set': {'genre_2': '<장르2>' + '\n' + '공포'}})
 
-db.ART_movie_list.update_many({'genre_1': '<장르1>' + '\n' + '멜로/로맨스'}, {'$set': {'genre_1': '<장르1>' + '\n' + '멜로/애정/로맨스'}})
+db.ART_movie_list.update_many({'genre_1': '<장르1>' + '\n' + '멜로/애정/로맨스'}, {'$set': {'genre_1': '<장르1>' + '\n' + '멜로/로맨스'}})
 
-db.ART_movie_list.update_many({'genre_2': '<장르2>' + '\n' + '멜로/로맨스'}, {'$set': {'genre_2': '<장르2>' + '\n' + '멜로/애정/로맨스'}})
+db.ART_movie_list.update_many({'genre_2': '<장르2>' + '\n' + '멜로/애정/로맨스'}, {'$set': {'genre_2': '<장르2>' + '\n' + '멜로/로맨스'}})
